@@ -5,7 +5,7 @@ world = wf.newWorld(0,0, true)
 world:setGravity(0, 512)
 
     ball = world:newRectangleCollider(300, 300, 80, 80)
-  --  ball:applyLinearVelocity(5, 5, 10, 10)
+    
 
     floorPaddle = {}
         -- floorPaddle.sprite = love.graphics.newImage('sprites/fancy-paddle-blue.png')
