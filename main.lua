@@ -3,6 +3,7 @@ function love.load()
 wf = require('libraries.windfield')
 world = wf.newWorld(0,0, true)
 world:setGravity(0, 512)
+world:addCollisionClass('Solid')
 
     ball = world:newRectangleCollider(300, 300, 80, 80)
     
@@ -11,6 +12,7 @@ world:setGravity(0, 512)
         -- floorPaddle.sprite = love.graphics.newImage('sprites/fancy-paddle-blue.png')
         ground = world:newRectangleCollider(300, 500, 300, 30)
         ground:setType('static')
+        ground:setCollisionClass('Solid')
         floorPaddle.speed = 500
 
 end
