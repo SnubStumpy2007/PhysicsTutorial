@@ -1,40 +1,37 @@
 function love.load()
 
-player = {
-    x = 10,
-    y = 10,
-    sprite = love.graphics.newImage('sprites/parrot.png')
-}
+wf = require('libraries.windfield')
+world = wf.newWorld(0,0, true)
+world:setGravity(0, 512)
 
-crate = {
-    x = 100,
-    y = 100,
-    sprite = love.graphics.newImage('sprites/murek zniszczalny/Animacja/00.png')
-}
+    ball = world:newRectangleCollider(300, 300, 80, 80)
+  --  ball:applyLinearVelocity(5, 5, 10, 10)
 
-    wall = {
-        sprite = love.graphics.newImage('sprites/fancy-paddle-blue.png'),
-        x = 300,
-        y = 400,
-        w = 100,
-        h = 50
-    }
+    floorPaddle = {}
+        -- floorPaddle.sprite = love.graphics.newImage('sprites/fancy-paddle-blue.png')
+        ground = world:newRectangleCollider(300, 500, 300, 30)
+        ground:setType('static')
+        floorPaddle.speed = 500
 
-    movingPlatform = {
-        sprite = love.graphics.newImage('sprites/fancy-paddle-grey.png'),
-        x = 300,
-        y = 400,
-        w = 100,
-        h = 50
-    }
 end
 
-function love.update()
+function love.update(dt)
+
+    local moveX = 0
+
+    if love.keyboard.isDown("right") then
+        moveX = floorPaddle.speed * dt
+    elseif love.keyboard.isDown("left") then
+        moveX = -floorPaddle.speed * dt
+    end
+
+    local currentX, currentY = ground:getPosition()
+    ground:setPosition(currentX + moveX, currentY)
+
+    world:update(dt)
 end
 
 function love.draw()
-    love.graphics.draw(crate.sprite, crate.x, crate.y)
-    love.graphics.draw(player.sprite, player.x, player.y)
-    love.graphics.draw(wall.sprite, wall.x, wall.y)
-    love.graphics.draw(movingPlatform.sprite, movingPlatform.x, movingPlatform.y)
+
+    world:draw()
 end
